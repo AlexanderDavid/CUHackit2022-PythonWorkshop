@@ -1,0 +1,183 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usetheme{SimplePlus}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{listings,textcomp,color}
+\lstset{language=Python,upquote=true,
+  basicstyle=\ttfamily\tiny,
+  numberstyle=\tiny,stepnumber=1,numbersep=5pt, tabsize=2,
+  showspaces=false,showstringspaces=false,showtabs=false,
+  breaklines=true,breakatwhitespace=true,escapeinside=||,
+  keywordstyle=\color{blue!70},stringstyle=\color{green!70!black!70},
+  commentstyle=\color{black!80}\it
+}
+% ----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[short title]{CUHackit Python Workshop} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{Python-isms, dunders, and list comprehension}
+
+\author[Day]{Alex Day}
+
+\institute[CU] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+  Ph.D. Student\\
+  School of Computing\\
+  Clemson University% Your institution for the title page
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\begin{frame}{Overview}
+    % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+    \tableofcontents
+\end{frame}
+
+%------------------------------------------------
+\section{Introductions}
+%------------------------------------------------
+
+\begin{frame}{Alex Day}
+
+  \begin{columns}[c]
+    \column{.55\textwidth}
+    \begin{itemize}
+        \item B.S. Computer Science Clarion in Pennsylvania
+        \item Ph.D. Student under Dr. Ioannis Karamouzas
+        \item Working on Social Robot Navigation in the Motion Planning Lab in Charleston
+        \item Big fan editors that are hard to use (vim, emacs)
+        \item Programming in Python for the last 7 years
+    \end{itemize}
+
+    \column{.3\textwidth}
+    \begin{figure}
+        \includegraphics[width=1.0\textwidth]{profile.png}
+    \end{figure}
+  \end{columns}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Python}
+  \begin{columns}[c]
+    \column{.55\textwidth}
+    \begin{itemize}
+        \item First released in 1991 by Guido van Rossum (BDFL)
+        \item Python 3 was released in 2008
+        \item Scripting language popular in machine learning and for rapid prototyping
+        \item Massive repository of third party libraries on PyPi
+    \end{itemize}
+
+    \column{.3\textwidth}
+    \begin{figure}
+        \includegraphics[width=1.0\textwidth]{python.png}
+    \end{figure}
+  \end{columns}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Python}
+  \begin{example}
+    \lstinputlisting[language=Python]{introduction.py}
+  \end{example}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]{Types?}
+  \begin{itemize}
+    \item Python has no concept of type safety
+    \begin{example}
+        \begin{lstlisting}[language=Python]
+word = 'Hello'
+word = 7
+word = 3.63
+word = {}
+        \end{lstlisting}
+    \end{example}
+    \item The lack of type safety has pros and cons
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\section{List Comprehension}
+%------------------------------------------------
+
+\begin{frame}[fragile]{Lists}
+  \begin{itemize}
+    \item Lists are reference types, similar to \texttt{ArrayList}s in Java or \texttt{Vector}s in C++
+    \item Unlike other languages lists do not have a specific type
+  \end{itemize}
+  \begin{example}
+    \begin{lstlisting}[language=Python]
+numbers = [1, "2", 3, "4", 5, "6"]
+
+# Indexing
+print(numbers[1])
+numbers[1] = ["hello world"]
+>>> "2"
+
+# Slicing
+print(numbers[1:])
+>>> [["hello world"], 3, "4", 5, "6"]
+    \end{lstlisting}
+  \end{example}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{List Comprehension}
+  \begin{itemize}
+    \item
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\section{Dunder Methods}
+%------------------------------------------------
+
+%------------------------------------------------
+\section{Walrus Operator}
+%------------------------------------------------
+
+\begin{frame}{Walrus Operator}
+    \begin{enumerate}
+        \item
+        \item Explanation
+        \item Example
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Walrus Operator}
+  \begin{example}
+  \lstinputlisting[language=Python]{walrus.py}
+  \end{example}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+
+\begin{frame}
+    \Huge{\centerline{\textbf{The End}}}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
