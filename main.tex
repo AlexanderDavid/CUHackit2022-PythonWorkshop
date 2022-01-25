@@ -3,8 +3,19 @@
 %----------------------------------------------------------------------------------------
 \documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
 \usetheme{SimplePlus}
+\setbeamercovered{transparent=25}
+\AtBeginSection[]
+{
+    \begin{frame}
+        \frametitle{Overview}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
 
 \usepackage{hyperref}
+\usepackage{fontenc}
+% \hypersetup{colorlinks=true,urlcolor=blue}
+% \urlstyle{same}
 \usepackage{graphicx} % Allows including images
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 \usepackage{listings,textcomp,color}
@@ -16,6 +27,8 @@
   keywordstyle=\color{blue!70},stringstyle=\color{green!70!black!70},
   commentstyle=\color{black!80}\it
 }
+\setbeamerfont{title}{family=\fontfamily{LoRes}\selectfont}
+
 % ----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
@@ -29,9 +42,12 @@
 {
   Ph.D. Student\\
   School of Computing\\
-  Clemson University% Your institution for the title page
+  % Clemson University% Your institution for the title page
 }
-\date{\today} % Date, can be changed to a custom date
+\titlegraphic{
+  \includegraphics[width=0.25\textwidth]{imgs/soc.png}
+}
+\date{January 29, 2022} % Date, can be changed to a custom date
 
 
 %----------------------------------------------------------------------------------------
@@ -62,15 +78,24 @@
         \item B.S. Computer Science Clarion in Pennsylvania
         \item Ph.D. Student under Dr. Ioannis Karamouzas
         \item Working on Social Robot Navigation in the Motion Planning Lab in Charleston
-        \item Big fan editors that are hard to use (vim, emacs)
         \item Programming in Python for the last 7 years
     \end{itemize}
 
     \column{.3\textwidth}
     \begin{figure}
-        \includegraphics[width=1.0\textwidth]{profile.png}
+        \includegraphics[width=1.0\textwidth]{imgs/profile.png}
     \end{figure}
   \end{columns}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Audience}
+    \begin{itemize}[<+-|+>]
+        \item What year are you?
+        \item How comfortable are you with programming in general, any language?
+        \item How comfortable are you with python?
+    \end{itemize}
 \end{frame}
 
 %------------------------------------------------
@@ -81,13 +106,14 @@
     \begin{itemize}
         \item First released in 1991 by Guido van Rossum (BDFL)
         \item Python 3 was released in 2008
+        \item Python Enhancement Proposals (PEPs)
         \item Scripting language popular in machine learning and for rapid prototyping
         \item Massive repository of third party libraries on PyPi
     \end{itemize}
 
     \column{.3\textwidth}
     \begin{figure}
-        \includegraphics[width=1.0\textwidth]{python.png}
+        \includegraphics[width=1.0\textwidth]{imgs/python.png}
     \end{figure}
   \end{columns}
 \end{frame}
@@ -96,7 +122,55 @@
 
 \begin{frame}{Python}
   \begin{example}
-    \lstinputlisting[language=Python]{introduction.py}
+    \lstinputlisting[language=Python]{code/introduction.py}
+  \end{example}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Input and Output}
+  \begin{example}
+    \lstinputlisting[language=Python]{code/io.py}
+  \end{example}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Conditionals}
+  \begin{example}
+    \lstinputlisting[language=Python]{code/conditionals.py}
+  \end{example}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Iteration (While)}
+  \begin{example}
+    \lstinputlisting[language=Python]{code/iteration_while.py}
+  \end{example}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Iteration (For)}
+  \begin{example}
+    \lstinputlisting[language=Python]{code/iteration_for.py}
+  \end{example}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Functions}
+  \begin{example}
+    \lstinputlisting[language=Python]{code/functions.py}
+  \end{example}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Classes}
+  \begin{example}
+    \lstinputlisting[language=Python]{code/classes.py}
   \end{example}
 \end{frame}
 
@@ -104,7 +178,10 @@
 
 \begin{frame}[fragile]{Types?}
   \begin{itemize}
-    \item Python has no concept of type safety
+    \item Python is duck typed
+    \begin{itemize}
+        \item If it walks like a \texttt{float} and looks like a \texttt{float} then it's probably a \texttt{float}
+    \end{itemize}
     \begin{example}
         \begin{lstlisting}[language=Python]
 word = 'Hello'
@@ -114,8 +191,29 @@ word = {}
         \end{lstlisting}
     \end{example}
     \item The lack of type safety has pros and cons
+    \item \href{https://docs.python.org/3/library/typing.html}{\texttt{typing}} and \href{http://mypy-lang.org/}{\texttt{mypy}} aim to make python statically typed
   \end{itemize}
 \end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]{Typing in Python}
+  \begin{example}
+    \lstinputlisting[language=Python]{code/functions_typed.py}
+  \end{example}
+\end{frame}
+
+\begin{frame}[fragile]{Typing in Python}
+  \begin{example}
+    \begin{lstlisting}[language=bash, otherkeywords={mypy}]
+mypy functions_typed.py
+# Success: no issues found in 1 source file
+    \end{lstlisting}
+  \end{example}
+\end{frame}
+
+
+%------------------------------------------------
 
 %------------------------------------------------
 \section{List Comprehension}
@@ -128,16 +226,17 @@ word = {}
   \end{itemize}
   \begin{example}
     \begin{lstlisting}[language=Python]
-numbers = [1, "2", 3, "4", 5, "6"]
+numbers = [1, 2, 3, 4, 5, 6]
 
 # Indexing
 print(numbers[1])
-numbers[1] = ["hello world"]
->>> "2"
+>>> 2
 
 # Slicing
 print(numbers[1:])
->>> [["hello world"], 3, "4", 5, "6"]
+>>> [2, 3, 4, 5, 6]
+
+wacky = [1, 1.5, "one point five", {}]
     \end{lstlisting}
   \end{example}
 \end{frame}
@@ -168,7 +267,7 @@ print(numbers[1:])
 
 \begin{frame}{Walrus Operator}
   \begin{example}
-  \lstinputlisting[language=Python]{walrus.py}
+  \lstinputlisting[language=Python]{code/walrus.py}
   \end{example}
 \end{frame}
 
