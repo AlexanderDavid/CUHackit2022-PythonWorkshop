@@ -27,14 +27,13 @@
   keywordstyle=\color{blue!70},stringstyle=\color{green!70!black!70},
   commentstyle=\color{black!80}\it
 }
-\setbeamerfont{title}{family=\fontfamily{LoRes}\selectfont}
 
 % ----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
 \title[short title]{CUHackit Python Workshop} % The short title appears at the bottom of every slide, the full title is only on the title page
-\subtitle{Python-isms, dunders, and list comprehension}
+\subtitle{Guided Tour Through My Favorite Python-isms}
 
 \author[Day]{Alex Day}
 
@@ -42,6 +41,8 @@
 {
   Ph.D. Student\\
   School of Computing\\
+  \vspace{10px}
+  \href{https://github.com/AlexanderDavid/CUHackit2022-PythonWorkshop}{shorturl.at/lrFH2}
   % Clemson University% Your institution for the title page
 }
 \titlegraphic{
@@ -245,12 +246,143 @@ wacky = [1, 1.5, "one point five", {}]
 
 \begin{frame}{List Comprehension}
   \begin{itemize}
-    \item
+    \item Just a syntactical nicity
+    \item Intuitive to read even for a non-programmer
+    \begin{example}
+      \lstinputlisting[language=Python, lastline=1, firstline=1]{code/comprehensions.py}
+    \end{example}
   \end{itemize}
 \end{frame}
 
 %------------------------------------------------
+
+\begin{frame}{Generation of Lists}
+  \begin{itemize}
+    \item Allows terse generation of complicated risk
+    \begin{example}
+      \lstinputlisting[language=Python, lastline=8, firstline=3]{code/comprehensions.py}
+    \end{example}
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Filtering of Lists}
+  \begin{itemize}
+    \item Allows you to filter lists using a boolean function
+    \begin{example}
+      \lstinputlisting[language=Python, firstline=10, lastline=22]{code/comprehensions.py}
+    \end{example}
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Cool List Comprehensions}
+  \begin{itemize}
+    \item There are also some pretty neat things you can do
+    \begin{example}
+      \lstinputlisting[language=Python, firstline=24, lastline=26]{code/comprehensions.py}
+      \lstinputlisting[language=Python, firstline=28, lastline=30]{code/comprehensions.py}
+    \end{example}
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
 \section{Dunder Methods}
+%------------------------------------------------
+
+\begin{frame}{Dunder Methods}
+  \begin{itemize}
+    \item Dunder (\textbf{d}ouble-\textbf{under}score) methods are special methods that can be implemented in objects
+    \item Similar to the concept of \texttt{toString} in Java
+    \item These methods allow special behavior such as:
+      \begin{enumerate}
+        \item \texttt{\_\_repr\_\_(self)} controls how the object is shown as a string
+        \item \texttt{\_\_getitem\_\_(self, idx)} allows you to implement indexing on your object
+        \item \texttt{\_\_contains\_\_(self, item)} allows you to implement the \texttt{in} keyword functionality
+      \end{enumerate}
+    \item \href{https://docs.python.org/3/reference/datamodel.html\#special-methods}{exhaustive list in the Python documentation}
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{\texttt{\_\_repr\_\_}}
+  \begin{itemize}
+    \item Meant to return a debugging-quality string representing the object
+    \item Similar to \texttt{\_\_str\_\_}
+    \begin{itemize}
+      \item \texttt{\_\_str\_\_} is for a user-facing, ambiguous, incomplete string representation
+      \item \texttt{\_\_repr\_\_} is for a developer-facing, unambiguous, complete string representation
+    \end{itemize}
+  \end{itemize}
+  \begin{example}
+    \lstinputlisting[language=Python]{code/repr.py}
+  \end{example}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{\texttt{\_\_lt\_\_}, \texttt{\_\_gt\_\_}, \texttt{\_\_eq\_\_}, etc.}
+  \begin{itemize}
+    \item Rich comparison operators which work as you would expect
+    \item The signatures all take the same form of \texttt{\_\_lt\_\_(self, other)}
+    \item These functions \textit{should} return either \texttt{True} or \texttt{False}
+  \end{itemize}
+  \begin{example}
+    \lstinputlisting[language=Python]{code/lt.py}
+  \end{example}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{\texttt{\_\_getitem\_\_}, \texttt{\_\_setitem\_\_}, and \texttt{\_\_delitem\_\_}}
+  \begin{itemize}
+    \item Allows indexing and indexing related operations like slicing
+    \item Primarily implemented on custom container objects like dictionaries or lists
+    \item \texttt{\_\_getitem\_\_(self, key)}
+      \begin{itemize}
+        \item Returns a reference to the object at \texttt{key}
+        \item Have to special implement the negative indexes
+      \end{itemize}
+    \item \texttt{\_\_setitem\_\_(self, key, value)}
+      \begin{itemize}
+        \item Allows the user to insert a \texttt{value} into a \texttt{key}
+        \item Should only be implemented if you can also remove from the container
+      \end{itemize}
+    \item \texttt{\_\_delitem\_\_(self, key)}
+      \begin{itemize}
+        \item Allows the user to delete an item at a specific \texttt{key}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{\texttt{\_\_getitem\_\_}, \texttt{\_\_setitem\_\_}, and \texttt{\_\_delitem\_\_}}
+  \begin{example}
+    \lstinputlisting[language=Python, lastline=6]{code/getitem.py}
+  \end{example}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{\texttt{\_\_getitem\_\_}, \texttt{\_\_setitem\_\_}, and \texttt{\_\_delitem\_\_}}
+  \begin{example}
+    \lstinputlisting[language=Python, firstline=8, lastline=30]{code/getitem.py}
+  \end{example}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{\texttt{\_\_getitem\_\_}, \texttt{\_\_setitem\_\_}, and \texttt{\_\_delitem\_\_}}
+  \begin{example}
+    \lstinputlisting[language=Python, firstline=32]{code/getitem.py}
+  \end{example}
+\end{frame}
+
 %------------------------------------------------
 
 %------------------------------------------------
