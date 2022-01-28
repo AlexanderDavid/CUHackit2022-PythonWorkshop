@@ -1,9 +1,9 @@
 from random import choice
 
 class Dog:
-    def __init__(self, name: str, breed: str):
-        self._name = name # type: str
-        self._breed = breed # type: str
+    def __init__(self, name, breed):
+        self._name = name
+        self._breed = breed
 
     @property
     def name(self):
@@ -17,7 +17,7 @@ class Dog:
         print("WOOF")
 
     @staticmethod
-    def make_random_dog() -> "Dog":
-        names = ["Frido", "Spot", "Kansas", "Lucky"] # type: List[str]
-        breeds = ["German Shepard", "Border Collie", "Golden Doodle", "Labrador"] # type: List[str]
+    def make_random_dog():
+        names = ["Frido", "Spot", "Kansas", "Lucky"]
+        breeds = ["German Shepard", "Border Collie", "Golden Doodle", "Labrador"]
         return Dog(choice(names), choice(breeds))

@@ -41,10 +41,11 @@
 {
   Ph.D. Student\\
   School of Computing\\
-  \vspace{10px}
+  \vspace{5px}
   \href{https://github.com/AlexanderDavid/CUHackit2022-PythonWorkshop}{shorturl.at/lrFH2}
   % Clemson University% Your institution for the title page
 }
+
 \titlegraphic{
   \includegraphics[width=0.25\textwidth]{imgs/soc.png}
 }
@@ -390,16 +391,26 @@ wacky = [1, 1.5, "one point five", {}]
 %------------------------------------------------
 
 \begin{frame}{Walrus Operator}
-    \begin{enumerate}
-        \item
-        \item Explanation
-        \item Example
-    \end{enumerate}
+    \begin{itemize}
+      \item Another nicity that allows more terse code
+      \item Normally the item assignment action doesn't return any value
+      \item Using the walrus operator (\texttt{:=}) causes the assignment to return that variable
+    \end{itemize}
 \end{frame}
+
+%----------------------------------------------------------------------------------------
 
 \begin{frame}{Walrus Operator}
   \begin{example}
-  \lstinputlisting[language=Python]{code/walrus.py}
+  \lstinputlisting[language=Python, lastline=12]{code/walrus.py}
+  \end{example}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+
+\begin{frame}{Walrus Operator}
+  \begin{example}
+  \lstinputlisting[language=Python, firstline=14]{code/walrus.py}
   \end{example}
 \end{frame}
 
