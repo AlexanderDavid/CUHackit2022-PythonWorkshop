@@ -32,24 +32,20 @@
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[short title]{CUHackit Python Workshop} % The short title appears at the bottom of every slide, the full title is only on the title page
-\subtitle{Guided Tour Through My Favorite Python-isms}
+\title[short title]{Powerlaw Explained} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{A Guided Tour Through the Mysteries of Force-based Motion Planning}
 
 \author[Day]{Alex Day}
 
 \institute[CU] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
   Ph.D. Student\\
-  School of Computing\\
+  Motion Planning Lab @ Clemson University\\
   \vspace{5px}
-  \href{https://github.com/AlexanderDavid/CUHackit2022-PythonWorkshop}{shorturl.at/lrFH2}
   % Clemson University% Your institution for the title page
 }
 
-\titlegraphic{
-  \includegraphics[width=0.25\textwidth]{imgs/soc.png}
-}
-\date{January 29, 2022} % Date, can be changed to a custom date
+\date{\today} % Date, can be changed to a custom date
 
 
 %----------------------------------------------------------------------------------------
@@ -69,387 +65,119 @@
 \end{frame}
 
 %------------------------------------------------
-\section{Introductions}
+\section{Basics of Motion Planning}
 %------------------------------------------------
 
-\begin{frame}{Alex Day}
-
-  \begin{columns}[c]
-    \column{.55\textwidth}
+\begin{frame}{Problem Definition}
     \begin{itemize}
-        \item B.S. Computer Science Clarion in Pennsylvania
-        \item Ph.D. Student under Dr. Ioannis Karamouzas
-        \item Working on Social Robot Navigation in the Motion Planning Lab in Charleston
-        \item Programming in Python for the last 7 years
-    \end{itemize}
-
-    \column{.3\textwidth}
-    \begin{figure}
-        \includegraphics[width=1.0\textwidth]{imgs/profile.png}
-    \end{figure}
-  \end{columns}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Audience}
-    \begin{itemize}[<+-|+>]
-        \item What year are you?
-        \item How comfortable are you with programming in general, any language?
-        \item How comfortable are you with python?
+        \item Given a set of agents $A$, each agent has:
+        \begin{itemize}
+          \item $\mathbf{p}^{t}$ position at time $t$
+          \item $\mathbf{v}^{t}$ velocity at time $t$
+          \item $\mathbf{g}$ a goal position
+          \item $r$ a radius
+        \end{itemize}
+        \item Each agent is non-holonomic, DOF of the control space equals DOF of the state space
+        \item We want:
+        \begin{itemize}
+          \item $\lvert \mathbf{p}^{-1}_{a} - \mathbf{g}_{a} \rvert < \epsilon$
+          \item $\lvert \mathbf{p}^{t}_{a} - \mathbf{p}^{t}_{b} \rvert < r_{a} + r_{b}$
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
-%------------------------------------------------
-
-\begin{frame}{Python}
-  \begin{columns}[c]
-    \column{.55\textwidth}
+\begin{frame}{Motion Planning}
     \begin{itemize}
-        \item First released in 1991 by Guido van Rossum (BDFL)
-        \item Python 3 was released in 2008
-        \item Python Enhancement Proposals (PEPs)
-        \item Scripting language popular in machine learning and for rapid prototyping
-        \item Massive repository of third party libraries on PyPi
-    \end{itemize}
-
-    \column{.3\textwidth}
-    \begin{figure}
-        \includegraphics[width=1.0\textwidth]{imgs/python.png}
-    \end{figure}
-  \end{columns}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Python}
-  \begin{example}
-    \lstinputlisting[language=Python]{code/introduction.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Input and Output}
-  \begin{example}
-    \lstinputlisting[language=Python]{code/io.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Conditionals}
-  \begin{example}
-    \lstinputlisting[language=Python]{code/conditionals.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Iteration (While)}
-  \begin{example}
-    \lstinputlisting[language=Python]{code/iteration_while.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Iteration (For)}
-  \begin{example}
-    \lstinputlisting[language=Python]{code/iteration_for.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Tuples and Tuple Expansion}
-  \begin{example}
-    \lstinputlisting[language=Python]{code/tuple.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Functions}
-  \begin{example}
-    \lstinputlisting[language=Python]{code/functions.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Classes}
-  \begin{example}
-    \lstinputlisting[language=Python]{code/classes.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}[fragile]{Types?}
-  \begin{itemize}
-    \item Python is duck typed
-    \begin{itemize}
-        \item If it walks like a \texttt{float} and looks like a \texttt{float} then it's probably a \texttt{float}
-    \end{itemize}
-    \begin{example}
-        \begin{lstlisting}[language=Python]
-word = 'Hello'
-word = 7
-word = 3.63
-word = {}
-        \end{lstlisting}
-    \end{example}
-    \item The lack of type safety has pros and cons
-    \item \href{https://docs.python.org/3/library/typing.html}{\texttt{typing}} and \href{http://mypy-lang.org/}{\texttt{mypy}} aim to make python statically typed
-  \end{itemize}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}[fragile]{Typing in Python}
-  \begin{example}
-    \lstinputlisting[language=Python]{code/functions_typed.py}
-  \end{example}
-\end{frame}
-
-\begin{frame}[fragile]{Typing in Python}
-  \begin{example}
-    \begin{lstlisting}[language=bash, otherkeywords={mypy}]
-mypy functions_typed.py
-# Success: no issues found in 1 source file
-    \end{lstlisting}
-  \end{example}
-\end{frame}
-
-
-%------------------------------------------------
-
-%------------------------------------------------
-\section{List Comprehension}
-%------------------------------------------------
-
-\begin{frame}[fragile]{Lists}
-  \begin{itemize}
-    \item Lists are reference types, similar to \texttt{ArrayList}s in Java or \texttt{Vector}s in C++
-    \item Unlike other languages lists do not have a specific type
-  \end{itemize}
-  \begin{example}
-    \begin{lstlisting}[language=Python]
-numbers = [1, 2, 3, 4, 5, 6]
-
-# Indexing
-print(numbers[1])
->>> 2
-
-# Slicing
-print(numbers[1:])
->>> [2, 3, 4, 5, 6]
-
-wacky = [1, 1.5, "one point five", {}]
-    \end{lstlisting}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{List Comprehension}
-  \begin{itemize}
-    \item Just a syntactical nicity
-    \item Intuitive to read even for a non-programmer
-    \begin{example}
-      \lstinputlisting[language=Python, lastline=1, firstline=1]{code/comprehensions.py}
-    \end{example}
-  \end{itemize}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Generation of Lists}
-  \begin{itemize}
-    \item Allows terse generation of complicated lists
-    \begin{example}
-      \lstinputlisting[language=Python, lastline=8, firstline=3]{code/comprehensions.py}
-    \end{example}
-  \end{itemize}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Filtering of Lists}
-  \begin{itemize}
-    \item Allows you to filter lists using a boolean function
-    \begin{example}
-      \lstinputlisting[language=Python, firstline=10, lastline=22]{code/comprehensions.py}
-    \end{example}
-  \end{itemize}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Cool List Comprehensions}
-  \begin{itemize}
-    \item There are also some pretty neat things you can do
-    \begin{example}
-      \lstinputlisting[language=Python, firstline=24, lastline=26]{code/comprehensions.py}
-      \lstinputlisting[language=Python, firstline=28, lastline=30]{code/comprehensions.py}
-    \end{example}
-  \end{itemize}
-\end{frame}
-
-%------------------------------------------------
-
-\section{Dunder Methods}
-%------------------------------------------------
-
-\begin{frame}{Dunder Methods}
-  \begin{itemize}
-    \item Dunder (\textbf{d}ouble-\textbf{under}score) methods are special methods that can be implemented in objects
-    \item Similar to the concept of \texttt{toString} in Java
-    \item These methods allow special behavior such as:
-      \begin{enumerate}
-        \item \texttt{\_\_repr\_\_(self)} controls how the object is shown as a string
-        \item \texttt{\_\_getitem\_\_(self, idx)} allows you to implement indexing on your object
-        \item \texttt{\_\_contains\_\_(self, item)} allows you to implement the \texttt{in} keyword functionality
-      \end{enumerate}
-    \item \href{https://docs.python.org/3/reference/datamodel.html\#special-methods}{exhaustive list in the Python documentation}
-  \end{itemize}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{\texttt{\_\_repr\_\_}}
-  \begin{itemize}
-    \item Meant to return a debugging-quality string representing the object
-    \item Similar to \texttt{\_\_str\_\_}
-    \begin{itemize}
-      \item \texttt{\_\_str\_\_} is for a user-facing, ambiguous, incomplete string representation
-      \item \texttt{\_\_repr\_\_} is for a developer-facing, unambiguous, complete string representation
-    \end{itemize}
-  \end{itemize}
-  \begin{example}
-    \lstinputlisting[language=Python]{code/repr.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{\texttt{\_\_lt\_\_}, \texttt{\_\_gt\_\_}, \texttt{\_\_eq\_\_}, etc.}
-  \begin{itemize}
-    \item Rich comparison operators which work as you would expect
-    \item The signatures all take the same form of \texttt{\_\_lt\_\_(self, other)}
-    \item These functions \textit{should} return either \texttt{True} or \texttt{False}
-  \end{itemize}
-  \begin{example}
-    \lstinputlisting[language=Python]{code/lt.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{\texttt{\_\_getitem\_\_}, \texttt{\_\_setitem\_\_}, and \texttt{\_\_delitem\_\_}}
-  \begin{itemize}
-    \item Allows indexing and indexing related operations like slicing
-    \item Primarily implemented on custom container objects like dictionaries or lists
-    \item \texttt{\_\_getitem\_\_(self, key)}
-      \begin{itemize}
-        \item Returns a reference to the object at \texttt{key}
-        \item Have to special implement the negative indexes
-      \end{itemize}
-    \item \texttt{\_\_setitem\_\_(self, key, value)}
-      \begin{itemize}
-        \item Allows the user to insert a \texttt{value} into a \texttt{key}
-        \item Should only be implemented if you can also remove from the container
-      \end{itemize}
-    \item \texttt{\_\_delitem\_\_(self, key)}
-      \begin{itemize}
-        \item Allows the user to delete an item at a specific \texttt{key}
-      \end{itemize}
-  \end{itemize}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{\texttt{\_\_getitem\_\_}, \texttt{\_\_setitem\_\_}, and \texttt{\_\_delitem\_\_}}
-  \begin{example}
-    \lstinputlisting[language=Python, lastline=6]{code/getitem.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{\texttt{\_\_getitem\_\_}, \texttt{\_\_setitem\_\_}, and \texttt{\_\_delitem\_\_}}
-  \begin{example}
-    \lstinputlisting[language=Python, firstline=8, lastline=30]{code/getitem.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{\texttt{\_\_getitem\_\_}, \texttt{\_\_setitem\_\_}, and \texttt{\_\_delitem\_\_}}
-  \begin{example}
-    \lstinputlisting[language=Python, firstline=32]{code/getitem.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-
-%------------------------------------------------
-\section{Walrus Operator}
-%------------------------------------------------
-
-\begin{frame}{Walrus Operator}
-    \begin{itemize}
-      \item Another nicity that allows more terse code
-      \item Normally the item assignment action doesn't return any value
-      \item Using the walrus operator (\texttt{:=}) causes the assignment to return that variable
+        \item Motion planning is one of the most fundamental skills a human being possesses
+        \item Being able to avoid collisions allows us to interact with other humans
+        \item Teaching a robot how to approach this problem is very hard
     \end{itemize}
 \end{frame}
 
-%----------------------------------------------------------------------------------------
-
-\begin{frame}{Walrus Operator}
-  \begin{example}
-  \lstinputlisting[language=Python, lastline=12]{code/walrus.py}
-  \end{example}
-\end{frame}
-
-%----------------------------------------------------------------------------------------
-
-\begin{frame}{Walrus Operator}
-  \begin{example}
-  \lstinputlisting[language=Python, firstline=14]{code/walrus.py}
-  \end{example}
-\end{frame}
-
-%------------------------------------------------
-\section{Cool Things Coming in Python 3.10}
-%------------------------------------------------
-
-\begin{frame}{Type Union Operator}
+\begin{frame}{Current Ecosystem}
+  \begin{itemize}
+    \item Geometric approaches
     \begin{itemize}
-      \item A terse way of accepting unions
-      \item Doesn't require \texttt{import typing}
-  \begin{example}
-    \lstinputlisting[language=Python, lastline=13]{code/310.py}
-  \end{example}
+      \item RVO \& ORCA
+      \item \textbf{PowerLaw}
+      \item Helbing
+    \end{itemize}
+    \item Learning approaches
+    \begin{itemize}
+      \item KDMA
+      \item CrowdNav/CADRL
+      \item NavDreams
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
-%----------------------------------------------------------------------------------------
-
-\begin{frame}{Structural Pattern Matching}
-  \begin{example}
-  \lstinputlisting[language=Python, lastline=15]{code/310.py}
-  \end{example}
+\begin{frame}{Powerlaw}
+  \begin{itemize}
+    \item Humans use \textit{Time-to-Collision (ttc)}, or $\tau$, as a metric for avoiding collisions
+    \item When plotting the ttc against a pairwise density function a clear trend emerges
+  \end{itemize}
+  \begin{figure}
+    \includegraphics[width=1.0\textwidth]{imgs/pl_graph.png}
+  \end{figure}
 \end{frame}
 
-%----------------------------------------------------------------------------------------
-
-\begin{frame}
-    \Huge{\centerline{\textbf{The End}}}
+\begin{frame}{Powerlaw}
+  \begin{itemize}
+    \item From that we can generate a model for approximating the energy of a state based on the ttc:
+  \end{itemize}
+  \begin{gather*}
+    E(\tau) = \dfrac{k}{\tau^{2}} e^{-\tau / \tau_{0}}\\\\
+    \text{where $\tau$ is the ttc,}\\
+    \text{$k$ is a constant that sets the units,}\\
+    \text{and $\tau_{0}$ is the time horizon}
+  \end{gather*}
 \end{frame}
 
-%----------------------------------------------------------------------------------------
+\begin{frame}{Powerlaw}
+  \begin{itemize}
+    \item This directly implies that the gradient of the energy is the repulsive force experienced by pedestrians
+  \end{itemize}
+  \begin{gather*}
+    \mathbf{F}(\tau) = - \nabla_{\mathbf{r}}\left( \dfrac{k}{\tau^{2}} e^{-\tau / \tau_{0}} \right)\\
+    \text{where $\nabla_{\mathbf{r}}$ is the spacial gradient}
+  \end{gather*}
+  \begin{itemize}
+    \item This force is calculated for each agent and combined with a goal driving force
+    \item Integrating this force results in a collision free and goal directed velocity
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\section{Great, now what does that actually mean?}
+%------------------------------------------------
+
+\begin{frame}{High Level}
+  \begin{itemize}
+    \item There is a force driving each agent to the goal
+    \item Each agent enacts some sort of force on every other agent
+    \item This inter-agent force is sufficient to avoid all collisions between agents
+    \item This combination results in a SOTA decentralized motion planning algorithm
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Goal Driving Force}
+  \begin{itemize}
+    \item Defined as the vector pointing directly at the goal
+    \item Can be scaled to promote collision-free decisions over goal-directed ones
+  \end{itemize}
+  \[
+    \mathbf{F}_{goal} = \mathbf{g} - \mathbf{p}
+  \]
+\end{frame}
+
+\begin{frame}{Goal Driving Force}
+  \begin{figure}
+    \includegraphics[width=0.5\textwidth]{imgs/goal_directed_force.png}
+  \end{figure}
+\end{frame}
+
+%------------------------------------------------
+\section{Conclusions, Contributions, and Future Work}
+%------------------------------------------------
 
 \end{document}
