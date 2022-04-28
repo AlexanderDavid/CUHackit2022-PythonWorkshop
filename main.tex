@@ -68,6 +68,14 @@
 \section{Basics of Motion Planning}
 %------------------------------------------------
 
+\begin{frame}{Motion Planning}
+    \begin{itemize}
+        \item Motion planning is one of the most fundamental skills a human being possesses
+        \item Being able to avoid collisions allows us to interact with other humans
+        \item Teaching a robot how to approach this problem is very hard
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{Problem Definition}
     \begin{itemize}
         \item Given a set of agents $A$, each agent has:
@@ -86,13 +94,16 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Motion Planning}
-    \begin{itemize}
-        \item Motion planning is one of the most fundamental skills a human being possesses
-        \item Being able to avoid collisions allows us to interact with other humans
-        \item Teaching a robot how to approach this problem is very hard
-    \end{itemize}
+\begin{frame}{Goal Driving Force}
+  \begin{itemize}
+    \item Defined as the vector pointing directly at the goal
+    \item Getting to the goal is a robots prime directive
+  \end{itemize}
+  \[
+    \mathbf{F}_{goal} = \mathbf{g} - \mathbf{p}
+  \]
 \end{frame}
+
 
 \begin{frame}{Current Ecosystem}
   \begin{itemize}
@@ -109,6 +120,33 @@
       \item NavDreams
     \end{itemize}
   \end{itemize}
+\end{frame}
+
+\begin{frame}{Time to Collision}
+  \begin{itemize}
+    \item Humans use \textit{Time-to-Collision (ttc)}, or $\tau$, as a metric for avoiding collisions
+  \end{itemize}
+  \begin{figure}
+    \includegraphics[width=0.7\textwidth]{imgs/no_ttc.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Time to Collision}
+  \begin{itemize}
+    \item Humans use \textit{Time-to-Collision (ttc)}, or $\tau$, as a metric for avoiding collisions
+  \end{itemize}
+  \begin{figure}
+    \includegraphics[width=0.7\textwidth]{imgs/ttc_far.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Time to Collision}
+  \begin{itemize}
+    \item Humans use \textit{Time-to-Collision (ttc)}, or $\tau$, as a metric for avoiding collisions
+  \end{itemize}
+  \begin{figure}
+    \includegraphics[width=0.7\textwidth]{imgs/ttc_close.png}
+  \end{figure}
 \end{frame}
 
 \begin{frame}{Powerlaw}
@@ -142,14 +180,10 @@
     \text{where $\nabla_{\mathbf{r}}$ is the spacial gradient}
   \end{gather*}
   \begin{itemize}
-    \item This force is calculated for each agent and combined with a goal driving force
-    \item Integrating this force results in a collision free and goal directed velocity
+    \item Integrating this force results in a collision free velocity
+    \item Combining this with the goal-directed force satisfies both goal-directed behavior and collision-free behavior
   \end{itemize}
 \end{frame}
-
-%------------------------------------------------
-\section{Great, now what does that actually mean?}
-%------------------------------------------------
 
 \begin{frame}{High Level}
   \begin{itemize}
@@ -160,10 +194,30 @@
   \end{itemize}
 \end{frame}
 
+%------------------------------------------------
+\section{Great, now what does that actually mean?}
+%------------------------------------------------
+
+\begin{frame}{Context}
+\begin{itemize}
+  \item Thus far everything has been abstract, so lets contextualize
+
+  \begin{figure}
+    \includegraphics[width=0.6\textwidth]{imgs/scene.png}
+  \end{figure}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Goal Driving Force}
+  \begin{figure}
+    \includegraphics[width=0.5\textwidth]{imgs/goal_directed_force.png}
+  \end{figure}
+\end{frame}
+
 \begin{frame}{Goal Driving Force}
   \begin{itemize}
     \item Defined as the vector pointing directly at the goal
-    \item Can be scaled to promote collision-free decisions over goal-directed ones
+    \item Getting to the goal is a robots prime directive
   \end{itemize}
   \[
     \mathbf{F}_{goal} = \mathbf{g} - \mathbf{p}
@@ -176,8 +230,88 @@
   \end{figure}
 \end{frame}
 
+\begin{frame}{Goal Driving Surface}
+  \begin{figure}
+    \includegraphics[width=0.5\textwidth]{imgs/goal_surface.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Combined Induced Forces}
+  \begin{figure}
+    \includegraphics[width=0.5\textwidth]{imgs/combined_forces.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Combined Induced Forces}
+  \begin{figure}
+    \includegraphics[width=0.5\textwidth]{imgs/forces_surface.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Powerlaw Forces}
+  \begin{figure}
+    \includegraphics[width=0.5\textwidth]{imgs/final_vel.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Powerlaw Surface}
+  \begin{figure}
+    \includegraphics[width=0.5\textwidth]{imgs/final_vel_surface.png}
+  \end{figure}
+\end{frame}
+
 %------------------------------------------------
-\section{Conclusions, Contributions, and Future Work}
+\section{Explaining my Visualization Choices}
 %------------------------------------------------
+
+\begin{frame}{Simplicity of the Output}
+  \begin{itemize}
+    \item Motion planning algorithms work mostly with velocities and forces
+    \item While there are a decent number of steps in the pipeline, they all deal with something that is relatively basic to visualize
+    \item I wanted to build intuition in a similar way to the way a spiral wishing well works
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Spiral Wishing Well}
+  \begin{figure}
+    \includegraphics[width=0.75\textwidth]{imgs/spiral_wishing_well.jpg}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Vector Fields}
+  \begin{itemize}
+    \item I couldn't just jump straight to a surface
+    \item Vector fields are a good middle ground that show both directionality and magnitude of velocities 
+    \item Still have the problem of not really being able to convey how ``strong'' the repulsive force is
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Delaunay Triangulation}
+  \begin{itemize}
+    \item With the Powerlaw algorithm being based on something similar to gradient descent I knew I would have to develop some sort of surface to convey this
+    \item Delanunay was a simple way to create that surface
+    \item I could vary which of the magnitudes to plot as the z axis, the spacial derivative is something I left to the reader
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\section{Conclusions and Future Work}
+%------------------------------------------------
+
+\begin{frame}{Conclusions}
+  \begin{itemize}
+    \item Bringing nice visualizations to fruition is both incredibly frustrating and rewarding
+    \item A lot of my intuition as to how Powerlaw would look was wrong
+    \item As robots become more involved in daily life it will be important to understand how they work
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Future Work}
+  \begin{itemize}
+    \item Visualize in velocity space rather than positional space
+    \item Include a ``true" geometric planner like ORCA
+    \item Try to visualize something non-numerical, like CrowdNav
+  \end{itemize}
+\end{frame}
 
 \end{document}
